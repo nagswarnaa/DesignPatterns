@@ -61,5 +61,8 @@ However, following the Single Responsibility Principle (SRP) often leads to a de
 Therefore, while SRP often results in creating more classes, the principle should be applied judiciously to strike the right balance between simplicity and modularity.
 
 ## 2. Open/Closed Principle: 
+    A Software entity(class, module) should be open for extension and closed for modification. This principle aims to allow systems to grow and change with new requirements without directly modifying existing source code, thereby reducing the risk of introducing new bugs in previously tested and validated code.
+- Open for Extension: You should be able to extend the behavior of a module if the requirements of the application change, or to add new features.
+- Closed for Modification: Extending the behavior of a module should not require changing the source code of the module itself. Instead, the new behavior should be added by creating new entities.
 
 
