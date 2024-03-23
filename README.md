@@ -8,7 +8,7 @@
 Let's dive deep into each one these along with examples:
 
 ## 1. Single Responsibility Principle 
-                                      A class should have only one reason to change, means a class should do only one job or should have only one responsibility.
+    A class should have only one reason to change, means a class should do only one job or should have only one responsibility.
 Let's dive deeper into the Single Responsibility Principle (SRP) with a practical example. Consider a system for managing a library's book inventory. A common violation of SRP occurs when a class takes on responsibilities that should be separated into different classes.
 
     class LibraryBook:
