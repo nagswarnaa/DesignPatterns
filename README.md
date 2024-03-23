@@ -28,5 +28,5 @@ Let's dive deeper into the Single Responsibility Principle (SRP) with a practica
 
       def save(self):
           # Logic to save the book details to a database
-
+Above example is a violation of SRP Principle since it has multiple responsibilities, Checking-in the books(Inventory), persisting book data to a database, managing book properties.
 
