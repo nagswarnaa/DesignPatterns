@@ -1,1 +1,2 @@
-# DesignPatterns
+### SOLID Principles:
+1. 
