@@ -60,4 +60,6 @@ However, following the Single Responsibility Principle (SRP) often leads to a de
 
 Therefore, while SRP often results in creating more classes, the principle should be applied judiciously to strike the right balance between simplicity and modularity.
 
+## 2. Open/Closed Principle: 
+
 
