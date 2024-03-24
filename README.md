@@ -64,5 +64,30 @@ Therefore, while SRP often results in creating more classes, the principle shoul
     A Software entity(class, module) should be open for extension and closed for modification. This principle aims to allow systems to grow and change with new requirements without directly modifying existing source code, thereby reducing the risk of introducing new bugs in previously tested and validated code.
 - **Open for Extension:** You should be able to extend the behavior of a module if the requirements of the application change, or to add new features.
 - **Closed for Modification:** Extending the behavior of a module should not require changing the source code of the module itself. Instead, the new behavior should be added by creating new entities.
+- 
+**How to Apply OCP**
+
+Applying OCP typically involves the use of interfaces or abstract classes to abstract away the concrete implementations of behaviors or algorithms. By programming to an interface, your system can easily incorporate new behaviors by adding new classes that implement these interfaces without changing the existing code.
+
+
+      from abc import ABC, abstractmethod
+     class ReportGenerator(ABC):
+        @abstractmethod
+        def generate_report(self, content):
+            pass
+
+    class PdfReportGenerator(ReportGenerator):
+        def generate_report(self, content):
+            # Logic to generate a PDF report
+            print("Report generated in PDF format.")
+
+    class HtmlReportGenerator(ReportGenerator):
+        def generate_report(self, content):
+            # Logic to generate an HTML report
+            print("Report generated in HTML format.")
+
+The above system is open for extension because you can add new report formats by creating new classes that implement the ReportGenerator interface. It is closed for modification because you do not need to change existing classes to add new types of reports.
+
+The Open/Closed Principle encourages a proactive approach to designing your systems in a way that they can evolve over time with minimal changes to existing code. This design philosophy helps manage complexity, reduce the risk of bugs, and improve the maintainability of software projects.
 
 
