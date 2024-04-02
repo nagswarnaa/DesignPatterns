@@ -245,6 +245,87 @@ In this example:
 
 This example showcases that the `List` interface and its implementers (`ArrayList`, `LinkedList`, etc.) follow the Liskov Substitution Principle. It allows for flexibility and interoperability in code that uses the Java Collections Framework, enabling developers to choose the specific implementation that best suits their performance characteristics and requirements without altering the correctness of the program.
 
+The "I" in SOLID principles stands for the Interface Segregation Principle (ISP), which states that no client should be forced to depend on methods it does not use. Essentially, ISP suggests that it's better to have many smaller, more specific interfaces rather than a single, do-all interface. This principle helps in minimizing the impact of changes, improving code organization, and supporting high cohesion with low coupling in software designs.
+
+## 3. Interface Seggregation Principle: 
+
+ISP aims to reduce the side effects and frequency of required changes by splitting a wide set of actions into smaller and more specific ones. The principle encourages designing interfaces that are client-specific rather than general-purpose, so clients will only know about the methods that are of interest to them.
+
+### Importance
+
+- **Minimizes Code Reusability Issues**: By adhering to ISP, systems become more flexible and adaptable to change. Clients can implement only the interfaces their need, reducing the dependencies on unused code.
+- **Enhances System Maintainability**: Smaller, well-defined interfaces are easier to implement, test, and maintain over time.
+- **Supports High Cohesion**: Ensures that modules or components have tightly related and focused functionalities.
+- **Encourages Decoupling**: Clients are less likely to be affected by changes in unrelated system parts, leading to systems that are easier to refactor, change, and understand.
+
+### Applying ISP
+
+To apply ISP effectively:
+
+1. **Identify the Clients**: Understand who or what will be using the interface. A client can be another class or module in the system.
+2. **Define Specific Interfaces**: Based on the client's needs, define interfaces that contain only the methods required by the client.
+3. **Implement Interfaces**: Classes should implement these specific interfaces, ensuring that they don't carry additional unnecessary methods that aren't of use to the client.
+
+### Comsider Below example
+
+Consider an all-in-one interface for a smart device:
+
+```
+interface SmartDevice {
+    void print();
+    void fax();
+    void scan();
+}
+```
+
+This design forces all implementing classes to define methods for `print`, `fax`, and `scan`, even if a specific device does not support all these functions. This violates ISP.
+
+A better approach following ISP would be to segregate the `SmartDevice` interface into more specific interfaces:
+
+```
+interface Printer {
+    void print();
+}
+
+interface Fax {
+    void fax();
+}
+
+interface Scanner {
+    void scan();
+}
+```
+
+Now, a device that only supports printing need only implement the `Printer` interface:
+
+```
+class SimplePrinter implements Printer {
+    public void print() {
+        // Implementation for print
+    }
+}
+```
+
+And a multifunctional device could implement multiple interfaces:
+
+```
+class MultiFunctionalPrinter implements Printer, Scanner, Fax {
+    public void print() {
+        // Implementation for print
+    }
+
+    public void scan() {
+        // Implementation for scan
+    }
+
+    public void fax() {
+        // Implementation for fax
+    }
+}
+```
+
+This approach adheres to ISP by ensuring that a class is not forced to implement interfaces and methods that it does not use.
+
 
 
 
