@@ -144,7 +144,7 @@ To adhere to the Liskov Substitution Principle:
 
 Here's a simple Java code example that illustrates the LSP violation with the `Rectangle` and `Square` scenario described:
 
-```
+```java
 // Base class
 class Rectangle {
     private int width;
@@ -213,7 +213,7 @@ Consider the `List` interface and its methods, such as `add(E e)`, `get(int inde
 
 Here is a simple code example to illustrate this:
 
-```
+```java
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -270,7 +270,7 @@ To apply ISP effectively:
 
 Consider an all-in-one interface for a smart device:
 
-```
+```java
 interface SmartDevice {
     void print();
     void fax();
@@ -282,7 +282,7 @@ This design forces all implementing classes to define methods for `print`, `fax`
 
 A better approach following ISP would be to segregate the `SmartDevice` interface into more specific interfaces:
 
-```
+```java
 interface Printer {
     void print();
 }
@@ -298,7 +298,7 @@ interface Scanner {
 
 Now, a device that only supports printing need only implement the `Printer` interface:
 
-```
+```java
 class SimplePrinter implements Printer {
     public void print() {
         // Implementation for print
@@ -308,7 +308,7 @@ class SimplePrinter implements Printer {
 
 And a multifunctional device could implement multiple interfaces:
 
-```
+```java
 class MultiFunctionalPrinter implements Printer, Scanner, Fax {
     public void print() {
         // Implementation for print
@@ -379,6 +379,214 @@ In this example:
 - `LinkedList` implements both the `List` and `Queue` interfaces, showing how a class can serve multiple collection roles, thanks to the segregation of interfaces in the Collections Framework.
 
 This approach adheres to ISP by ensuring that a class is not forced to implement interfaces and methods that it does not use.
+
+## 3. Dependency Inversion Principle: 
+
+     DIP is a crucial principle in software design aimed at reducing dependencies between high-level modules (which provide complex logic) and low-level modules (which provide utility features or basic operations) by introducing an abstraction layer.
+
+### Understanding High-Level and Low-Level Modules
+
+- **High-Level Modules** are classes or components that implement business rules or logic. They operate on a higher level of abstraction, orchestrating the behavior of the application.
+- **Low-Level Modules** are the workhorses that perform specific operations, like database access, network communication, or device control. They are detailed implementations that high-level modules rely on to function.
+
+### The Problem DIP Addresses
+
+Without DIP, high-level modules directly depend on low-level modules, making the system rigid, difficult to change, and hard to test. For example, if a high-level module `OrderProcessor` directly creates and uses a low-level module `MySQLDatabase` for data persistence, it's tightly coupled to that specific implementation. If you decide to switch databases, you'd need to modify the `OrderProcessor`, violating the open/closed principle.
+
+### The DIP Solution
+
+DIP solves this problem by inverting the traditional dependency relationship:
+
+1. **Both Should Depend on Abstractions**: Instead of high-level modules depending on low-level modules, both should depend on abstractions. An abstraction is a layer that provides a general interface for interaction, such as interfaces or abstract classes in Java.
+   
+2. **Abstractions Should Not Depend on Details**: Interfaces or abstract classes should not be tailored to specific implementations but should define a general contract that any implementation can fulfill.
+
+### How to Apply DIP
+
+1. **Define Interfaces or Abstract Classes**: Identify what operations high-level modules need from low-level modules and define these operations in interfaces or abstract classes. This step creates the abstraction layer.
+   
+2. **Implement Interfaces for Low-Level Modules**: Create concrete implementations of the interfaces for your low-level modules. These are the specific details that fulfill the contract defined by the abstraction.
+
+3. **Inject Dependencies**: High-level modules should be designed to accept any implementation of the interface they depend on. This is typically achieved through dependency injection, where the specific instances of the low-level modules are provided to the high-level modules (e.g., via a constructor, method parameter, or using a dependency injection framework).
+
+### Detailed Example
+
+Let's expand on the `Button` and `Lamp` example with a focus on dependency injection for better clarity:
+
+```java
+// Step 1: Define an interface as an abstraction layer
+interface Device {
+    void turnOn();
+    void turnOff();
+}
+
+// Step 2: Implement the interface with a low-level module
+class Lamp implements Device {
+    @Override
+    public void turnOn() {
+        System.out.println("Lamp is now on.");
+    }
+
+    @Override
+    public void turnOff() {
+        System.out.println("Lamp is now off.");
+    }
+}
+
+// Another low-level module
+class Fan implements Device {
+    @Override
+    public void turnOn() {
+        System.out.println("Fan is now on.");
+    }
+
+    @Override
+    public void turnOff() {
+        System.out.println("Fan is now off.");
+    }
+}
+
+// Step 3: High-level module that depends on the abstraction (interface)
+class RemoteControl {
+    private Device device;
+
+    // Dependency injection via constructor
+    public RemoteControl(Device device) {
+        this.device = device;
+    }
+
+    public void togglePower() {
+        if (Math.random() > 0.5) {
+            device.turnOn();
+        } else {
+            device.turnOff();
+        }
+    }
+}
+
+// Demonstrating DIP with dependency injection
+public class HomeAutomation {
+    public static void main(String[] args) {
+        Device lamp = new Lamp();
+        Device fan = new Fan();
+
+        RemoteControl controlForLamp = new RemoteControl(lamp);
+        RemoteControl controlForFan = new RemoteControl(fan);
+
+        controlForLamp.togglePower();
+        controlForFan.togglePower();
+    }
+}
+```
+
+In this example:
+
+- `Device` is the abstraction that both high-level and low-level modules depend on.
+- `Lamp` and `Fan` are low-level modules that implement the `Device` interface. They can be replaced or extended without affecting the high-level module (`RemoteControl`).
+- `RemoteControl` is a high-level module that operates on the `Device` abstraction. It's designed to control any device, demonstrating DIP by depending on an abstraction rather than concrete implementations.
+
+### Scenario: Data Processing and Storage
+
+Imagine you have a high-level module responsible for processing data and then storing it. Without applying DIP, this module might directly depend on a specific collection implementation (e.g., `ArrayList`) for its storage needs. However, this direct dependency makes the module less flexible and more tightly coupled to a specific implementation of the Java Collections Framework.
+
+### Step 1: Define an Interface as an Abstraction
+
+First, define an interface that abstracts the concept of data storage. This interface declares methods for adding and retrieving data, without specifying the underlying storage mechanism.
+
+```java
+interface DataStorage<T> {
+    void add(T item);
+    T get(int index);
+}
+```
+
+### Step 2: Implement the Interface with Specific Collections
+
+Next, create concrete implementations of the `DataStorage` interface using different Java Collections. These implementations are the low-level modules in this context.
+
+```java
+class ListDataStorage<T> implements DataStorage<T> {
+    private List<T> list = new ArrayList<>();
+
+    @Override
+    public void add(T item) {
+        list.add(item);
+    }
+
+    @Override
+    public T get(int index) {
+        return list.get(index);
+    }
+}
+
+class SetDataStorage<T> implements DataStorage<T> {
+    private Set<T> set = new HashSet<>();
+    private List<T> list = new ArrayList<>();
+
+    @Override
+    public void add(T item) {
+        if (set.add(item)) { // Add item to set to ensure uniqueness, and list for retrieval
+            list.add(item);
+        }
+    }
+
+    @Override
+    public T get(int index) {
+        return list.get(index);
+    }
+}
+```
+
+### Step 3: High-Level Module That Depends on the Abstraction
+
+Create a high-level module, such as a data processor, that operates on the `DataStorage` abstraction. This module is designed to work with any data storage implementation that conforms to the `DataStorage` interface.
+
+```java
+class DataProcessor<T> {
+    private DataStorage<T> storage;
+
+    public DataProcessor(DataStorage<T> storage) {
+        this.storage = storage;
+    }
+
+    public void processData(T data) {
+        // Process data (details omitted for brevity)
+        storage.add(data);
+    }
+
+    public T retrieveData(int index) {
+        return storage.get(index);
+    }
+}
+```
+
+### Demonstrating Dependency Inversion
+
+```java
+public class Application {
+    public static void main(String[] args) {
+        DataStorage<String> listStorage = new ListDataStorage<>();
+        DataStorage<String> setStorage = new SetDataStorage<>();
+
+        DataProcessor<String> processorUsingList = new DataProcessor<>(listStorage);
+        DataProcessor<String> processorUsingSet = new DataProcessor<>(setStorage);
+
+        processorUsingList.processData("Data1");
+        processorUsingList.processData("Data2");
+
+        processorUsingSet.processData("Data1");
+        processorUsingSet.processData("Data1"); // Duplicate, will not be added in set
+
+        System.out.println(processorUsingList.retrieveData(0)); // Outputs: Data1
+        System.out.println(processorUsingSet.retrieveData(0)); // Outputs: Data1
+    }
+}
+```
+
+In this example:
+
+- `DataStorage<T>` serves as an abstraction for different ways of storing data, allowing the `DataProcessor` (a high-level module) to depend on an abstraction rather than concrete implementations.
+- `ListDataStorage<T>` and `SetDataStorage<T>` are concrete implementations of the `DataStorage` interface, showing how low-level
 
 
 
