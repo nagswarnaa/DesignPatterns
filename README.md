@@ -323,6 +323,60 @@ class MultiFunctionalPrinter implements Printer, Scanner, Fax {
     }
 }
 ```
+In the Java Collections Framework, the Interface Segregation Principle (ISP) is inherently applied through its design, which favors specific interfaces for specific purposes rather than a single, monolithic interface for all collection types. This design allows for flexibility and ensures that implementing classes only need to provide functionality relevant to their specific type of collection, adhering to the ISP.
+
+### Example of ISP in Java Collections Framework
+
+Consider how Java's Collection Framework segregates interfaces for different collection types:
+
+- **`Collection` Interface**: The root interface in the Collections Framework hierarchy. It represents a group of objects, known as its elements. This interface is at the top level and is implemented by various other collection interfaces like `List`, `Set`, and `Queue`.
+
+- **`List` Interface**: An ordered collection (also known as a sequence). Lists can contain duplicate elements. The user can access elements by their integer index (position in the list), and search for elements in the list.
+
+- **`Set` Interface**: A collection that cannot contain duplicate elements. It models the mathematical set abstraction and is used to represent sets, such as the deck of cards.
+
+- **`Queue` Interface**: A collection used to hold multiple elements prior to processing. Besides basic Collection operations, queues provide additional insertion, extraction, and inspection operations. Queues typically, but not necessarily, order elements in a FIFO (first-in-first-out) manner.
+
+Each of these interfaces targets a specific type of collection with specific behaviors and properties, adhering to the Interface Segregation Principle. Clients can use these interfaces without being forced to implement methods that are irrelevant to the type of collection they are interested in.
+
+### Applying ISP in Practice
+
+Here's a simplified example of how you might apply ISP when working with these interfaces:
+
+```java
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class CollectionExample {
+    public static void main(String[] args) {
+        // List example
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("Item 1");
+        arrayList.add("Item 2");
+        System.out.println("ArrayList: " + arrayList);
+
+        // Set example
+        HashSet<String> hashSet = new HashSet<>();
+        hashSet.add("Item 1");
+        hashSet.add("Item 1");
+        System.out.println("HashSet (duplicates not allowed): " + hashSet);
+
+        // Queue example
+        Queue<String> queue = new LinkedList<>();
+        queue.offer("First");
+        queue.offer("Second");
+        System.out.println("Queue: " + queue);
+    }
+}
+```
+
+In this example:
+
+- `ArrayList` implements the `List` interface, providing an ordered, index-accessible collection that allows duplicates.
+- `HashSet` implements the `Set` interface, providing a collection that ensures uniqueness of its elements.
+- `LinkedList` implements both the `List` and `Queue` interfaces, showing how a class can serve multiple collection roles, thanks to the segregation of interfaces in the Collections Framework.
 
 This approach adheres to ISP by ensuring that a class is not forced to implement interfaces and methods that it does not use.
 
