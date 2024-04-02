@@ -60,6 +60,18 @@ However, following the Single Responsibility Principle (SRP) often leads to a de
 
 Therefore, while SRP often results in creating more classes, the principle should be applied judiciously to strike the right balance between simplicity and modularity.
 
+In the Java Collections Framework, the principle of Single Responsibility is followed meticulously, ensuring that each class has one and only one reason to change. This principle is a key aspect of SOLID design principles, promoting greater maintainability and a cleaner, more modular structure.
+
+A clear example of the Single Responsibility Principle (SRP) in the Java Collections Framework is the distinction between the `List`, `Set`, and `Map` interfaces, each serving a distinct purpose:
+
+- **`List` Interface**: Represents an ordered collection of elements that can contain duplicate values. It is responsible for maintaining the insertion order of the elements, and it allows positional access and insertion of elements. Classes like `ArrayList` and `LinkedList` implement the `List` interface, each with a specific approach to data storage and access, but all adhering to the single responsibility of managing an ordered collection.
+
+- **`Set` Interface**: Represents a collection that cannot contain duplicate elements. It is designed for scenarios where uniqueness of the elements is crucial. Implementations of the `Set` interface, such as `HashSet` and `TreeSet`, ensure that no two elements in the collection are the same, adhering strictly to their single responsibility of managing a set of unique elements.
+
+- **`Map` Interface**: Represents a collection of key-value pairs, where each key is unique. This interface is responsible for associating unique keys to specific values, allowing for efficient retrieval, update, and deletion of entries based on the key. Classes like `HashMap` and `TreeMap` implement the `Map` interface, each ensuring that they adhere to the single responsibility of managing a collection of key-value pairs where keys are unique.
+
+Each of these interfaces, and their implementing classes, is designed to fulfill a specific responsibility and does not stray into functionalities better suited for other structures. This adherence to the Single Responsibility Principle helps in making the Java Collections Framework a powerful, flexible, and maintainable component of the Java ecosystem.
+
 ## 2. Open/Closed Principle: 
     A Software entity(class, module) should be open for extension and closed for modification. This principle aims to allow systems to grow and change with new requirements without directly modifying existing source code, thereby reducing the risk of introducing new bugs in previously tested and validated code.
 - **Open for Extension:** You should be able to extend the behavior of a module if the requirements of the application change, or to add new features.
