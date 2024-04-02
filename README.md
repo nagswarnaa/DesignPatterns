@@ -114,6 +114,137 @@ The Open/Closed Principle is followed in this design in the following ways:
    - New classes can implement the `Collection` interface to create a new type of collection that adheres to the defined contract.
    - Existing classes can be extended to add new behavior. For example, you could extend `ArrayList` to create a `NotifyingArrayList` that emits events every time the collection is modified.
    - The framework can be extended with new interfaces and classes without altering the existing code. This has been seen over time with additions like the `Queue` interface and its implementations.
+     The Liskov Substitution Principle (LSP) is one of the five SOLID principles of object-oriented design, introduced by Barbara Liskov in 1987. LSP formalizes a foundational concept for creating maintainable, scalable, and robust object-oriented systems. It focuses on ensuring that inheritance hierarchies are designed so that derived classes can be used in place of their base classes without disrupting the correctness of the program.
+
+## 3. Liskov Substitution Principle: 
+
+    "Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program."
+
+In simpler terms, if class B is a subtype of class A, then we should be able to replace A with B without affecting the behavior of our program. This implies that B should not weaken the preconditions of A and should meet the postconditions of A, ensuring that B can stand in for A without any issues.
+
+LSP is crucial for the following reasons:
+
+- **Reliability**: Ensures that a subclass can stand in for its superclass without causing errors, leading to more reliable software.
+- **Reusability**: Promotes the reuse of base classes and interfaces by guaranteeing that subclasses fulfill the contracts defined by their base classes.
+- **Maintainability**: Facilitates easier maintenance of the codebase by ensuring that changes in subclasses do not break the expected behavior of the base class.
+
+### Applying LSP
+
+To adhere to the Liskov Substitution Principle:
+
+1. **Ensure Behavioral Compatibility**: Subclasses should not only inherit the interface of their base class but also its behavior. This means implementing the methods of the base class in a way that doesn’t alter their expected behavior.
+
+2. **Preserve Invariants**: Any rules or conditions that are true for the base class should also be true for the subclass.
+
+3. **Avoid Weakening Preconditions**: The conditions under which a subclass method can be called should not be more restrictive than those of its base class.
+
+4. **Avoid Strengthening Postconditions**: The conditions after a subclass method has been called should not promise more than what the base class method does.
+
+5. **Substitute Throwability**: If a method in the base class is not supposed to throw certain exceptions, the subclass method should adhere to the same constraint.
+
+Here's a simple Java code example that illustrates the LSP violation with the `Rectangle` and `Square` scenario described:
+
+```
+// Base class
+class Rectangle {
+    private int width;
+    private int height;
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getArea() {
+        return width * height;
+    }
+}
+
+// Subclass that violates LSP
+class Square extends Rectangle {
+    @Override
+    public void setWidth(int width) {
+        super.setWidth(width);
+        super.setHeight(width); // Violation: Changing width changes height
+    }
+
+    @Override
+    public void setHeight(int height) {
+        super.setWidth(height); // Violation: Changing height changes width
+        super.setHeight(height);
+    }
+}
+
+public class LSPDemo {
+    public static void main(String[] args) {
+        Rectangle rect = new Square();
+        rect.setWidth(5);
+        rect.setHeight(10);
+
+        // Expectation: area == 50, but due to LSP violation, area will be 100
+        System.out.println("Expected area of 5x10 rectangle: 50");
+        System.out.println("Actual area: " + rect.getArea());
+    }
+}
+```
+
+In this example:
+
+- The `Rectangle` class has `setWidth()` and `setHeight()` methods that independently set the width and height of a rectangle.
+- The `Square` class extends `Rectangle` but violates LSP because overriding the `setWidth()` and `setHeight()` methods to ensure the square's sides are equal leads to a situation where changing the width also changes the height and vice versa. This behavior is not expected from the base class perspective.
+
+When a `Rectangle` reference points to a `Square` object and attempts to set the width and height to different values, the end result does not match the expectation based on the behavior defined in `Rectangle`. This demonstrates the LSP violation, where `Square` cannot be used as a substitute for `Rectangle` without altering the correctness of the program.
+
+To adhere to LSP, one could avoid such an inheritance structure and instead use interfaces or favor composition over inheritance, ensuring that subclasses can indeed be substituted for their base class without unexpected behavior.
+In the Java Collections Framework, the Liskov Substitution Principle (LSP) is followed thoroughly to ensure that subclasses of the collection interfaces can be used interchangeably without breaking the functionality. A prominent example of LSP in action within the Java Collections Framework is the relationship between the `List` interface and its implementing classes, such as `ArrayList` and `LinkedList`.
+
+Consider the `List` interface and its methods, such as `add(E e)`, `get(int index)`, `remove(int index)`, etc. Both `ArrayList` and `LinkedList` implement the `List` interface and adhere to the contracts defined by it. This means you can substitute an `ArrayList` with a `LinkedList` in a piece of code without altering the correctness of the program from the perspective of list operations.
+
+Here is a simple code example to illustrate this:
+
+```
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> arrayList = new ArrayList<>();
+        List<String> linkedList = new LinkedList<>();
+        
+        fillList(arrayList);
+        fillList(linkedList);
+
+        System.out.println("ArrayList contents: " + arrayList);
+        System.out.println("LinkedList contents: " + linkedList);
+    }
+
+    public static void fillList(List<String> list) {
+        list.add("Java");
+        list.add("Python");
+        list.add("C++");
+    }
+}
+```
+
+In this example:
+
+- The `fillList` method accepts a `List<String>` argument and adds several strings to it. This method illustrates that you can use an `ArrayList` or a `LinkedList` (or any other class that implements the `List` interface) interchangeably without needing to change the method's implementation. The `fillList` method doesn't need to know the specific type of `List` it's working with, thanks to the LSP adherence in the design of these classes.
+- Both `ArrayList` and `LinkedList` provide their own implementation of the `List` interface methods, optimized for their respective data structures, but from the perspective of a `List` user, they can be used interchangeably.
+
+This example showcases that the `List` interface and its implementers (`ArrayList`, `LinkedList`, etc.) follow the Liskov Substitution Principle. It allows for flexibility and interoperability in code that uses the Java Collections Framework, enabling developers to choose the specific implementation that best suits their performance characteristics and requirements without altering the correctness of the program.
+
 
 
 
