@@ -249,9 +249,9 @@ This example showcases that the `List` interface and its implementers (`ArrayLis
 
 The "I" in SOLID principles stands for the Interface Segregation Principle (ISP), which states that no client should be forced to depend on methods it does not use. Essentially, ISP suggests that it's better to have many smaller, more specific interfaces rather than a single, do-all interface. This principle helps in minimizing the impact of changes, improving code organization, and supporting high cohesion with low coupling in software designs.
 
-## 3. Interface Seggregation Principle: 
+## 4. Interface Seggregation Principle: 
 
-ISP aims to reduce the side effects and frequency of required changes by splitting a wide set of actions into smaller and more specific ones. The principle encourages designing interfaces that are client-specific rather than general-purpose, so clients will only know about the methods that are of interest to them.
+    ISP aims to reduce the side effects and frequency of required changes by splitting a wide set of actions into smaller and more specific ones. The principle encourages designing interfaces that are client-specific rather than general-purpose, so clients will only know about the methods that are of interest to them.
 
 ### Importance
 
@@ -382,7 +382,7 @@ In this example:
 
 This approach adheres to ISP by ensuring that a class is not forced to implement interfaces and methods that it does not use.
 
-## 3. Dependency Inversion Principle: 
+## 5. Dependency Inversion Principle: 
 
      DIP is a crucial principle in software design aimed at reducing dependencies between high-level modules (which provide complex logic) and low-level modules (which provide utility features or basic operations) by introducing an abstraction layer.
 
