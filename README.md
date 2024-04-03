@@ -60,8 +60,6 @@ Above example is a violation of SRP Principle since it has multiple responsibili
             pass
 However, following the Single Responsibility Principle (SRP) often leads to a design with more classes, each handling a single responsibility. Applying SRP (and other design principles) requires balance. Over-segmentation can lead to an excessive number of classes, making the system overly complex and potentially difficult to navigate. The key is to identify genuinely distinct responsibilities that justify separation into different classes. The goal is to enhance the maintainability, scalability, and understandability of the code without overcomplicating the design.
 
-Therefore, while SRP often results in creating more classes, the principle should be applied judiciously to strike the right balance between simplicity and modularity.
-
 In the Java Collections Framework, the principle of Single Responsibility is followed, ensuring that each class has one and only one reason to change. This principle is a key aspect of SOLID design principles, promoting a cleaner, more modular structure.
 
 A clear example of the Single Responsibility Principle (SRP) in the Java Collections Framework is the distinction between the `List`, `Set`, and `Map` interfaces, each serving a distinct purpose:
