@@ -590,6 +590,312 @@ In this example:
 - `DataStorage<T>` serves as an abstraction for different ways of storing data, allowing the `DataProcessor` (a high-level module) to depend on an abstraction rather than concrete implementations.
 - `ListDataStorage<T>` and `SetDataStorage<T>` are concrete implementations of the `DataStorage` interface, showing how low-level
 
+The image you've uploaded seems to contain a list of Structural Design Patterns. Let's go over each one with a detailed explanation and examples:
+
+## Design Patterns:
+
+### Introduction to Structural Patterns
+Structural Design Patterns are concerned with how classes and objects are composed to form larger structures. They help ensure that when one part of a structure changes, the entire structure does not need to change. The key principle they use is composition—building complex structures by combining simpler parts.
+
+### Decorator Pattern
+**Intent**: Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+
+**Example**: Imagine you have a `Coffee` class and you want to add different mix-ins like milk, sugar, or whipped cream without altering the `Coffee` class:
+
+```java
+// Component
+public interface Coffee {
+    String getDescription();
+    double cost();
+}
+
+// Concrete Component
+public class SimpleCoffee implements Coffee {
+    @Override
+    public String getDescription() {
+        return "Simple Coffee";
+    }
+
+    @Override
+    public double cost() {
+        return 1.0;
+    }
+}
+
+// Decorator
+public abstract class CoffeeDecorator implements Coffee {
+    protected Coffee decoratedCoffee;
+    
+    public CoffeeDecorator(Coffee coffee) {
+        this.decoratedCoffee = coffee;
+    }
+    
+    public String getDescription() {
+        return decoratedCoffee.getDescription();
+    }
+    
+    public double cost() {
+        return decoratedCoffee.cost();
+    }
+}
+
+// Concrete Decorator
+public class MilkDecorator extends CoffeeDecorator {
+    public MilkDecorator(Coffee coffee) {
+        super(coffee);
+    }
+    
+    @Override
+    public String getDescription() {
+        return super.getDescription() + ", Milk";
+    }
+    
+    @Override
+    public double cost() {
+        return super.cost() + 0.5;
+    }
+}
+```
+
+### Facade Pattern
+**Intent**: Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+
+**Example**: Let's say you have a home theater system with a TV, DVD player, and sound system. Instead of controlling each separately, you could have a `HomeTheaterFacade` that simplifies the process:
+
+```java
+public class HomeTheaterFacade {
+    private TV tv;
+    private DVDPlayer dvdPlayer;
+    private SoundSystem soundSystem;
+
+    public HomeTheaterFacade(TV tv, DVDPlayer dvdPlayer, SoundSystem soundSystem) {
+        this.tv = tv;
+        this.dvdPlayer = dvdPlayer;
+        this.soundSystem = soundSystem;
+    }
+
+    public void watchMovie(String movie) {
+        tv.on();
+        soundSystem.on();
+        dvdPlayer.on();
+        dvdPlayer.play(movie);
+    }
+    
+    public void endMovie() {
+        tv.off();
+        soundSystem.off();
+        dvdPlayer.eject();
+        dvdPlayer.off();
+    }
+}
+```
+
+### Adapter Pattern
+**Intent**: Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces.
+
+**Example**: If you have a `USPowerSocket` and a European device with a `EuropeanPlug`, you can't connect the device directly. You need an adapter:
+
+```java
+// Target
+public interface USPowerSocket {
+    void plugIn(USPlugConnector plug);
+}
+
+// Adaptee
+public interface EuropeanPlugConnector {
+    void giveElectricity();
+}
+
+// Adapter
+public class USPlugAdapter implements USPowerSocket {
+    private EuropeanPlugConnector plug;
+
+    public USPlugAdapter(EuropeanPlugConnector plug) {
+        this.plug = plug;
+    }
+
+    @Override
+    public void plugIn(USPlugConnector plug) {
+        plug.giveElectricity();
+    }
+}
+```
+
+### Bridge Pattern
+**Intent**: Decouple an abstraction from its implementation so that the two can vary independently.
+
+**Example**: If you have a `RemoteControl` abstraction and you want it to work with different devices like TVs and radios without binding it to a specific device's implementation:
+
+```java
+// Implementor
+public interface Device {
+    void turnOn();
+    void turnOff();
+    void setChannel(int channel);
+}
+
+// Concrete Implementor
+public class TV implements Device {
+    public void turnOn() { /* ... */ }
+    public void turnOff() { /* ... */ }
+    public void setChannel(int channel) { /* ... */ }
+}
+
+// Abstraction
+public abstract class RemoteControl {
+    protected Device device;
+    
+    public RemoteControl(Device device) {
+        this.device = device;
+    }
+    
+    public abstract void togglePower();
+}
+
+// Refined Abstraction
+public class BasicRemoteControl extends RemoteControl {
+    public BasicRemoteControl(Device device) {
+        super(device);
+    }
+    
+    public void togglePower() {
+        /* Implementation code using device methods */
+    }
+}
+```
+
+### Composite Pattern
+**Intent**: Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects
+
+ uniformly.
+
+**Example**: Imagine you're building a file system where both individual `File` and `Directory` should be treated uniformly:
+
+```java
+// Component
+public interface FileSystemNode {
+    void print(String structure);
+}
+
+// Leaf
+public class File implements FileSystemNode {
+    private String name;
+
+    public File(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void print(String structure) {
+        System.out.println(structure + name);
+    }
+}
+
+// Composite
+public class Directory implements FileSystemNode {
+    private List<FileSystemNode> children = new ArrayList<>();
+    private String name;
+
+    public Directory(String name) {
+        this.name = name;
+    }
+    
+    public void add(FileSystemNode node) {
+        children.add(node);
+    }
+
+    @Override
+    public void print(String structure) {
+        System.out.println(structure + name);
+        for (FileSystemNode child : children) {
+            child.print(structure + "  ");
+        }
+    }
+}
+```
+
+### Flyweight Pattern
+**Intent**: Use sharing to support large numbers of fine-grained objects efficiently.
+
+**Example**: If you're rendering a forest with millions of trees, you don't want to store color and texture data for each tree individually:
+
+```java
+// Flyweight
+public class TreeModel {
+    private Mesh mesh;
+    private Texture bark;
+    private Texture leaves;
+    
+    // Constructor and methods
+}
+
+// Context
+public class Tree {
+    private TreeModel model;
+    private double height;
+    private double positionX;
+    private double positionY;
+    
+    // Constructor and methods that use model
+}
+
+// Flyweight Factory
+public class TreeFactory {
+    private static Map<String, TreeModel> treeModels = new HashMap<>();
+
+    public static TreeModel getTreeModel(String species) {
+        if(!treeModels.containsKey(species)) {
+            treeModels.put(species, new TreeModel(species));
+        }
+        return treeModels.get(species);
+    }
+}
+```
+
+### Proxy Pattern
+**Intent**: Provide a surrogate or placeholder for another object to control access to it.
+
+**Example**: You want to lazy-load an image in a graphic editor:
+
+```java
+// Subject
+public interface Image {
+    void display();
+}
+
+// Real Subject
+public class HighResolutionImage implements Image {
+    public HighResolutionImage(String imageFilePath) {
+        // load image from disk into memory
+        // this is a heavy operation
+    }
+    
+    @Override
+    public void display() {
+        // display the image
+    }
+}
+
+// Proxy
+public class ImageProxy implements Image {
+    private HighResolutionImage highResImage;
+    private String imageFilePath;
+
+    public ImageProxy(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
+    
+    @Override
+    public void display() {
+        if(highResImage == null) {
+            highResImage = new HighResolutionImage(imageFilePath);
+        }
+        highResImage.display();
+    }
+}
+```
+
+
 
 
 
