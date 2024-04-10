@@ -1,4 +1,4 @@
-### Before diving into the world of design patterns, it's essential to understand the SOLID principles, which lay the foundational knowledge necessary for understanding design patterns.
+### Before diving into the design patterns, it's essential to understand the SOLID principles, which lay the foundational knowledge necessary for understanding design patterns.
 
 ### SOLID Principles:
 1. Single Responsibility Principle
