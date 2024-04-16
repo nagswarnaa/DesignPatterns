@@ -3,9 +3,9 @@
 ### SOLID Principles:
 1. [Single Responsibility Principle](#1-single-responsibility-principle)
 2. [Open/Closed Principle](#2-openclosed-principle)
-3. [Liskov Substitution Principle](#lsp)
-4. [Interface Segregation Principle](#isp)
-5. [Dependency Inversion Principle](#dip)
+3. [Liskov Substitution Principle](#3-liskov-substitution-principle)
+4. [Interface Segregation Principle](#4-interface-segregation-principle) 
+5. [Dependency Inversion Principle](#5-dependency-inversion-principle)
 
 Let's dive deep into each one these along with examples:
 
