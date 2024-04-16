@@ -1,15 +1,15 @@
 ### Before diving into the design patterns, it's essential to understand the SOLID principles, which lay the foundational knowledge necessary for understanding design patterns.
 
 ### SOLID Principles:
-1. Single Responsibility Principle
-2. Open/Closed Principle
-3. Liskov Substitution Principle
-4. Interface Seggregation Principle
-5. Dependency Inversion Principle
+1. [Single Responsibility Principle](https://github.com/nagswarnaa/DesignPatterns/edit/main/README.md#1-single-responsibility-principle)
+2. [Open/Closed Principle](https://github.com/nagswarnaa/DesignPatterns/edit/main/README.md#2-openclosed-principle)
+3. [Liskov Substitution Principle](#lsp)
+4. [Interface Segregation Principle](#isp)
+5. [Dependency Inversion Principle](#dip)
 
 Let's dive deep into each one these along with examples:
 
-## 1. Single Responsibility Principle 
+## 1. Single Responsibility Principle
     A class should have only one reason to change, means a class should do only one job or should have only one responsibility.
 Let's dive deeper into the Single Responsibility Principle (SRP) with a practical example. Consider a system for managing a library's book inventory. A common violation of SRP occurs when a class takes on responsibilities that should be separated into different classes.
 
@@ -70,7 +70,7 @@ A clear example of the Single Responsibility Principle (SRP) in the Java Collect
 
 - **`Map` Interface**: Represents a collection of key-value pairs, where each key is unique. This interface is responsible for associating unique keys to specific values, allowing for efficient retrieval, update, and deletion of entries based on the key. Classes like `HashMap` and `TreeMap` implement the `Map` interface, each ensuring that they adhere to the single responsibility of managing a collection of key-value pairs where keys are unique.
 
-## 2. Open/Closed Principle: 
+## 2. Open/Closed Principle 
     A Software entity(class, module) should be open for extension and closed for modification. This principle aims to allow systems to grow and change with new requirements without directly modifying existing source code, thereby reducing the risk of introducing new bugs in previously tested and validated code.
 - **Open for Extension:** You should be able to extend the behavior of a module if the requirements of the application change, or to add new features.
 - **Closed for Modification:** Extending the behavior of a module should not require changing the source code of the module itself. Instead, the new behavior should be added by creating new entities.
@@ -116,7 +116,8 @@ The Open/Closed Principle is followed in this design in the following ways:
    - The framework can be extended with new interfaces and classes without altering the existing code. This has been seen over time with additions like the `Queue` interface and its implementations.
      The Liskov Substitution Principle (LSP) is one of the five SOLID principles of object-oriented design, introduced by Barbara Liskov in 1987. LSP formalizes a foundational concept for creating maintainable, scalable, and robust object-oriented systems. It focuses on ensuring that inheritance hierarchies are designed so that derived classes can be used in place of their base classes without disrupting the correctness of the program.
 
-## 3. Liskov Substitution Principle: 
+<a id="lsp"></a>
+## 3. Liskov Substitution Principle
 
     "Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program."
 
@@ -247,7 +248,8 @@ This example showcases that the `List` interface and its implementers (`ArrayLis
 
 The "I" in SOLID principles stands for the Interface Segregation Principle (ISP), which states that no client should be forced to depend on methods it does not use. Essentially, ISP suggests that it's better to have many smaller, more specific interfaces rather than a single, do-all interface. This principle helps in minimizing the impact of changes, improving code organization, and supporting high cohesion with low coupling in software designs.
 
-## 4. Interface Seggregation Principle: 
+<a id="isp"></a>
+## 4. Interface Segregation Principle
 
     ISP aims to reduce the side effects and frequency of required changes by splitting a wide set of actions into smaller and more specific ones. The principle encourages designing interfaces that are client-specific rather than general-purpose, so clients will only know about the methods that are of interest to them.
 
@@ -380,7 +382,8 @@ In this example:
 
 This approach adheres to ISP by ensuring that a class is not forced to implement interfaces and methods that it does not use.
 
-## 5. Dependency Inversion Principle: 
+<a id="dip"></a>
+## 5. Dependency Inversion Principle 
 
      DIP is a crucial principle in software design aimed at reducing dependencies between high-level modules (which provide complex logic) and low-level modules (which provide utility features or basic operations) by introducing an abstraction layer.
 
