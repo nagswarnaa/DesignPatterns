@@ -1,7 +1,7 @@
 ### Before diving into the design patterns, it's essential to understand the SOLID principles, which lay the foundational knowledge necessary for understanding design patterns.
 
 ### SOLID Principles:
-1. [Single Responsibility Principle](https://github.com/nagswarnaa/DesignPatterns/edit/main/README.md#1-single-responsibility-principle)
+1. [Single Responsibility Principle](#1-single-responsibility-principle)
 2. [Open/Closed Principle](https://github.com/nagswarnaa/DesignPatterns/edit/main/README.md#2-openclosed-principle)
 3. [Liskov Substitution Principle](#lsp)
 4. [Interface Segregation Principle](#isp)
