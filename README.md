@@ -2,7 +2,7 @@
 
 ### SOLID Principles:
 1. [Single Responsibility Principle](#1-single-responsibility-principle)
-2. [Open/Closed Principle](https://github.com/nagswarnaa/DesignPatterns/edit/main/README.md#2-openclosed-principle)
+2. [Open/Closed Principle](#2-openclosed-principle)
 3. [Liskov Substitution Principle](#lsp)
 4. [Interface Segregation Principle](#isp)
 5. [Dependency Inversion Principle](#dip)
